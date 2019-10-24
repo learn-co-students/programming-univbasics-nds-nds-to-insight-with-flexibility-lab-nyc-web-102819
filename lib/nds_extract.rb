@@ -107,15 +107,20 @@ updated_set = []
   nameNum = 0
   while nameNum < source.count do
     titleNum = 0
+
     while titleNum < source[nameNum][:movies].count do
-      updated_set.push({director_name: source[nameNum][:name], title: source[nameNum][:movies][titleNum][:title]})
+      updated_set.push([{director_name: source[nameNum][:name], title: source[nameNum][:movies][titleNum][:title]}])
       titleNum += 1
     end
     nameNum += 1
   end
+#    binding.pry
   updated_set
 end
 
+#=> [{:director_name=>"Byron Poodle", :title=>"At the park"},
+# {:director_name=>"Byron Poodle", :title=>"On the couch"},
+# {:director_name=>"Nancy Drew", :title=>"Biting"}]
 
 # ----------------    End of Your Code Region --------------------
 # Don't edit the following code! Make the methods above work with this method

@@ -52,7 +52,8 @@ def movies_with_director_key(name, movies_collection)
   updated_movies = []
   num = 0
   while num < movies_collection.count do
-    updated_movies.push({:director_name => name, :title => movies_collection[num][:title]})
+    updated_movies.push(movie_with_director_name(name, movies_collection[num]))
+#    updated_movies.push({:director_name => name, :title => movies_collection[num][:title]})
     num += 1
   end
    p updated_movies
@@ -74,6 +75,7 @@ def gross_per_studio(collection)
   #
   # Hash whose keys are the studio names and whose values are the sum
   # total of all the worldwide_gross numbers for every movie in the input Hash
+
 
   result = {}
   i = 0
@@ -106,17 +108,27 @@ def movies_with_directors_set(source)
 updated_set = []
   nameNum = 0
   while nameNum < source.count do
-    titleNum = 0
 
-    while titleNum < source[nameNum][:movies].count do
-      updated_set.push([{director_name: source[nameNum][:name], title: source[nameNum][:movies][titleNum][:title]}])
-      titleNum += 1
-    end
+    updated_set.push(movies_with_director_key(source[nameNum][:name],source[nameNum][:movies]))
+
+#    titleNum = 0
+#    while titleNum < source[nameNum][:movies].count do
+
+
+#      updated_set.push([{director_name: source[nameNum][:name], title: source[nameNum][:movies][titleNum][:title]}])
+#      titleNum += 1
+#    end
     nameNum += 1
   end
 #    binding.pry
   updated_set
 end
+
+#guide
+#director_name = dir_info_hash[:name] 
+#directors_movies = dir_info_hash[:movies] 
+#a_o_a_movies_by_dir << movies_with_director_key(director_name, directors_movies)
+
 
 #=> [{:director_name=>"Byron Poodle", :title=>"At the park"},
 # {:director_name=>"Byron Poodle", :title=>"On the couch"},
@@ -127,7 +139,9 @@ end
 # call code. You'll have to "see-saw" to get this to work!
 
 def studios_totals(nds)
+
   a_o_a_movies_with_director_names = movies_with_directors_set(nds)
   movies_with_director_names = flatten_a_o_a(a_o_a_movies_with_director_names)
+#binding.pry
   return gross_per_studio(movies_with_director_names)
 end

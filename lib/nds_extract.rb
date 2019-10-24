@@ -1,6 +1,6 @@
 # Provided, don't edit
 require 'directors_database'
-
+require 'pry'
 # A method we're giving you. This "flattens"  Arrays of Arrays so: [[1,2],
 # [3,4,5], [6]] => [1,2,3,4,5,6].
 
@@ -21,7 +21,7 @@ def flatten_a_o_a(aoa)
 end
 
 def movie_with_director_name(director_name, movie_data)
-  { 
+  {
     :title => movie_data[:title],
     :worldwide_gross => movie_data[:worldwide_gross],
     :release_year => movie_data[:release_year],
@@ -48,7 +48,18 @@ def movies_with_director_key(name, movies_collection)
   # Array of Hashes where each Hash represents a movie; however, they should all have a
   # :director_name key. This addition can be done by using the provided
   # movie_with_director_name method
+
+  updated_movies = []
+  num = 0
+  while num < movies_collection.count do
+    updated_movies.push({:director_name => name, :title => movies_collection[num][:title]})
+    num += 1
+  end
+   p updated_movies
 end
+
+
+
 
 
 def gross_per_studio(collection)
@@ -63,6 +74,21 @@ def gross_per_studio(collection)
   #
   # Hash whose keys are the studio names and whose values are the sum
   # total of all the worldwide_gross numbers for every movie in the input Hash
+
+  result = {}
+  i = 0
+  while i < collection.count
+    studio_name = collection[i][:studio]
+    studio_gross = collection[i][:worldwide_gross]
+    if !result[studio_name]
+      result[studio_name] = studio_gross
+    else
+      result[studio_name] += studio_gross
+    end
+    i += 1
+  end
+  result
+
 end
 
 def movies_with_directors_set(source)
@@ -76,7 +102,20 @@ def movies_with_directors_set(source)
   #
   # Array of Arrays containing all of a director's movies. Each movie will need
   # to have a :director_name key added to it.
+
+updated_set = []
+  nameNum = 0
+  while nameNum < source.count do
+    titleNum = 0
+    while titleNum < source[nameNum][:movies].count do
+      updated_set.push({director_name: source[nameNum][:name], title: source[nameNum][:movies][titleNum][:title]})
+      titleNum += 1
+    end
+    nameNum += 1
+  end
+  updated_set
 end
+
 
 # ----------------    End of Your Code Region --------------------
 # Don't edit the following code! Make the methods above work with this method
